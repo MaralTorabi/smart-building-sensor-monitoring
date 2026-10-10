@@ -1,4 +1,8 @@
-"""Unit tests for repository implementations."""
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
+"""
 
 from __future__ import annotations
 
@@ -11,8 +15,10 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.domain.alerts import Alert, AlertSeverity, AlertStatus
-from src.domain.sensors import SensorReading, SensorStatus, TemperatureSensor
+from src.domain.alert import Alert
+from src.domain.enums import AlertSeverity, AlertStatus, SensorStatus
+from src.domain.sensor import TemperatureSensor
+from src.domain.sensor_reading import SensorReading
 from src.repository.memory import (
     AlertRepository,
     InMemoryRepository,

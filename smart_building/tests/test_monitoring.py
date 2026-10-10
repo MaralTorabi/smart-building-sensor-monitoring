@@ -1,4 +1,8 @@
-"""Unit tests for MonitoringService, AlertService, NotificationService, and ReportingService."""
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
+"""
 
 from __future__ import annotations
 
@@ -11,9 +15,13 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.domain.alerts import AlertSeverity, AlertStatus
-from src.domain.models import Building, Floor, Room
-from src.domain.sensors import CO2Sensor, SensorReading, SensorStatus, TemperatureSensor
+from src.domain.alert import Alert
+from src.domain.building import Building
+from src.domain.enums import AlertSeverity, AlertStatus, SensorStatus
+from src.domain.floor import Floor
+from src.domain.room import Room
+from src.domain.sensor import CO2Sensor, TemperatureSensor
+from src.domain.sensor_reading import SensorReading
 from src.repository.memory import AlertRepository, ReadingRepository, SensorRepository
 from src.service.alert import AlertService
 from src.service.monitoring import MonitoringService, ThresholdRule

@@ -1,6 +1,7 @@
-"""Generic repository interface definition.
-
-Provides the generic CRUD contract for all domain entity repositories.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations

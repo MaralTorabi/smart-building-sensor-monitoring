@@ -1,6 +1,7 @@
-"""Monitoring service for analyzing sensor readings and device health.
-
-Coordinates sensor threshold checks, offline device detection, and alert generation.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations
@@ -9,8 +10,10 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 
-from ..domain.alerts import Alert, AlertSeverity
-from ..domain.sensors import Sensor, SensorReading, SensorStatus
+from ..domain.alert import Alert
+from ..domain.enums import AlertSeverity, SensorStatus
+from ..domain.sensor import Sensor
+from ..domain.sensor_reading import SensorReading
 from ..repository.memory import ReadingRepository, SensorRepository
 from .alert import AlertService
 

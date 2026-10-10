@@ -1,96 +1,19 @@
-"""Sensor domain models, enumerations, and concrete sensor implementations.
-
-This module defines the sensor hierarchy for the Smart Building Monitoring System.
-Explicit object-oriented design and strong typing are used to facilitate
-UML reverse-engineering and round-trip engineering.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations
 
-import math
 import random
 import uuid
 from abc import ABC, abstractmethod
 from datetime import datetime
-from enum import Enum
 from typing import Optional
 
-
-class SensorStatus(str, Enum):
-    """Enumeration representing the operational status of a sensor."""
-    ONLINE = "ONLINE"
-    OFFLINE = "OFFLINE"
-    MAINTENANCE = "MAINTENANCE"
-    DISABLED = "DISABLED"
-
-
-class SensorReading:
-    """Represents a discrete measurement produced by a sensor at a specific timestamp.
-
-    Attributes:
-        id: Unique identifier for the reading.
-        sensor_id: Identifier of the sensor that generated this reading.
-        timestamp: Time at which the reading was captured.
-        value: Numeric measurement value.
-        unit: Measurement unit (e.g., 'C', '%', 'ppm', 'kWh').
-    """
-
-    def __init__(
-        self,
-        id: str,
-        sensor_id: str,
-        timestamp: datetime,
-        value: float,
-        unit: str,
-    ) -> None:
-        self.id: str = id
-        self.sensor_id: str = sensor_id
-        self.timestamp: datetime = timestamp
-        self.value: float = value
-        self.unit: str = unit
-
-    def is_valid(self) -> bool:
-        """Validates that the reading value is a valid numeric measurement."""
-        return not (math.isnan(self.value) or math.isinf(self.value))
-
-    def convert_unit(self, target_unit: str) -> float:
-        """Converts the reading value into a target unit of measurement.
-
-        Args:
-            target_unit: The desired target unit symbol.
-
-        Returns:
-            The converted numeric value.
-
-        Raises:
-            ValueError: If conversion between the units is unsupported.
-        """
-        if self.unit == target_unit:
-            return self.value
-
-        # Temperature conversions
-        if self.unit == "C" and target_unit == "F":
-            return (self.value * 9.0 / 5.0) + 32.0
-        if self.unit == "F" and target_unit == "C":
-            return (self.value - 32.0) * 5.0 / 9.0
-        if self.unit == "C" and target_unit == "K":
-            return self.value + 273.15
-        if self.unit == "K" and target_unit == "C":
-            return self.value - 273.15
-
-        # Power/Energy conversions
-        if self.unit == "W" and target_unit == "kW":
-            return self.value / 1000.0
-        if self.unit == "kW" and target_unit == "W":
-            return self.value * 1000.0
-
-        raise ValueError(f"Conversion from unit '{self.unit}' to '{target_unit}' is not supported.")
-
-    def __repr__(self) -> str:
-        return (
-            f"SensorReading(id={self.id!r}, sensor_id={self.sensor_id!r}, "
-            f"value={self.value:.2f}{self.unit}, timestamp={self.timestamp.isoformat()})"
-        )
+from .enums import SensorStatus
+from .sensor_reading import SensorReading
 
 
 class Sensor(ABC):
@@ -99,11 +22,11 @@ class Sensor(ABC):
     Attributes:
         id: Unique identifier for the sensor.
         name: Human-readable name of the sensor.
-        status: Current operational status (ONLINE, OFFLINE, MAINTENANCE, DISABLED).
+        unit: Measurement unit produced by this sensor type.
         room_id: Identifier of the room where the sensor is installed (if any).
+        status: Current operational status (ONLINE, OFFLINE, MAINTENANCE, DISABLED).
         last_reading_time: Timestamp of the most recent reading produced.
         enabled: Flag indicating whether sensor data collection is active.
-        unit: Measurement unit produced by this sensor type.
     """
 
     def __init__(
@@ -142,18 +65,20 @@ class Sensor(ABC):
             RuntimeError: If the sensor is disabled or not online.
         """
         if not self.is_online():
-            raise RuntimeError(f"Cannot generate reading: Sensor '{self.name}' ({self.id}) is not online.")
+            raise RuntimeError(
+                f"Cannot generate reading: Sensor '{self.name}' ({self.id}) is not online."
+            )
 
-        now = datetime.now()
-        val = self.read_value()
-        self.last_reading_time = now
+        timestamp_now: datetime = datetime.now()
+        measured_val: float = self.read_value()
+        self.last_reading_time = timestamp_now
 
-        r_id = reading_id or str(uuid.uuid4())
+        assigned_id: str = reading_id if reading_id is not None else str(uuid.uuid4())
         return SensorReading(
-            id=r_id,
+            id=assigned_id,
             sensor_id=self.id,
-            timestamp=now,
-            value=val,
+            timestamp=timestamp_now,
+            value=measured_val,
             unit=self.unit,
         )
 

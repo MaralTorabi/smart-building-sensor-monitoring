@@ -1,6 +1,7 @@
-"""Alert lifecycle management service.
-
-Coordinates the creation, acknowledgment, resolution, and querying of system alerts.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations
@@ -9,7 +10,8 @@ import uuid
 from datetime import datetime
 from typing import List, Optional
 
-from ..domain.alerts import Alert, AlertSeverity, AlertStatus
+from ..domain.alert import Alert
+from ..domain.enums import AlertSeverity, AlertStatus
 from ..repository.memory import AlertRepository
 from .notification import NotificationService
 

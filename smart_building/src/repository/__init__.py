@@ -1,4 +1,8 @@
-"""Repository package exports for the Smart Building Monitoring System."""
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
+"""
 
 from .base import Repository
 from .memory import (

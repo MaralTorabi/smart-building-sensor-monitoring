@@ -1,28 +1,15 @@
-"""Alert domain models and enumerations for the Smart Building Monitoring System.
-
-This module models threshold violations, device failures, and system alerts
-along with their lifecycle transitions.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations
 
 from datetime import datetime
-from enum import Enum
 from typing import Optional
 
-
-class AlertSeverity(str, Enum):
-    """Severity levels for system alerts."""
-    INFO = "INFO"
-    WARNING = "WARNING"
-    CRITICAL = "CRITICAL"
-
-
-class AlertStatus(str, Enum):
-    """Lifecycle status for system alerts."""
-    OPEN = "OPEN"
-    ACKNOWLEDGED = "ACKNOWLEDGED"
-    RESOLVED = "RESOLVED"
+from .enums import AlertSeverity, AlertStatus
 
 
 class Alert:
@@ -58,19 +45,19 @@ class Alert:
         self.message: str = message
         self.severity: AlertSeverity = severity
         self.status: AlertStatus = status
-        self.created_at: datetime = created_at or datetime.now()
+        self.created_at: datetime = created_at if created_at is not None else datetime.now()
         self.acknowledged_at: Optional[datetime] = acknowledged_at
         self.resolved_at: Optional[datetime] = resolved_at
 
     def acknowledge(self, timestamp: Optional[datetime] = None) -> None:
         """Transitions alert to ACKNOWLEDGED state and records timestamp."""
         self.status = AlertStatus.ACKNOWLEDGED
-        self.acknowledged_at = timestamp or datetime.now()
+        self.acknowledged_at = timestamp if timestamp is not None else datetime.now()
 
     def resolve(self, timestamp: Optional[datetime] = None) -> None:
         """Transitions alert to RESOLVED state and records timestamp."""
         self.status = AlertStatus.RESOLVED
-        self.resolved_at = timestamp or datetime.now()
+        self.resolved_at = timestamp if timestamp is not None else datetime.now()
 
     def reopen(self) -> None:
         """Reopens an alert, transitioning back to OPEN state."""

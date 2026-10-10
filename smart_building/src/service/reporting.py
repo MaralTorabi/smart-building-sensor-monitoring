@@ -1,15 +1,16 @@
-"""Reporting and analytical service for facility management.
-
-Generates metric summaries, statistical aggregations, and diagnostic reports
-for sensors, rooms, and entire buildings without polluting domain entities.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from ..domain.alerts import AlertStatus
-from ..domain.models import Building, Room
+from ..domain.building import Building
+from ..domain.enums import AlertStatus
+from ..domain.room import Room
 from ..repository.memory import AlertRepository, ReadingRepository, SensorRepository
 
 

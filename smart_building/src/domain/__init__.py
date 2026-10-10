@@ -1,17 +1,23 @@
-"""Domain model exports for Smart Building Sensor Monitoring System."""
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
+"""
 
-from .alerts import Alert, AlertSeverity, AlertStatus
-from .models import Building, Floor, Room
-from .sensors import (
+from .alert import Alert
+from .building import Building
+from .enums import AlertSeverity, AlertStatus, SensorStatus
+from .floor import Floor
+from .room import Room
+from .sensor import (
     CO2Sensor,
     EnergySensor,
     HumiditySensor,
     MotionSensor,
     Sensor,
-    SensorReading,
-    SensorStatus,
     TemperatureSensor,
 )
+from .sensor_reading import SensorReading
 
 __all__ = [
     "Building",

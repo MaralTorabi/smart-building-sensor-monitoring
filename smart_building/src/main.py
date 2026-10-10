@@ -1,15 +1,7 @@
-"""Main application demonstration for Smart Building Sensor Monitoring System.
-
-This script demonstrates:
-1. Creating a Building structure (Floors, Rooms).
-2. Instantiating various specialized Sensor types.
-3. Attaching sensors to rooms and populating repositories.
-4. Generating multiple sensor readings (nominal and anomalous).
-5. Processing readings through MonitoringService.
-6. Triggering WARNING and CRITICAL threshold alerts.
-7. Displaying open alerts.
-8. Acknowledging and resolving alerts.
-9. Generating analytical and operational reports.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations
@@ -25,34 +17,38 @@ for p in (str(project_root), str(current_dir)):
         sys.path.insert(0, p)
 
 try:
-    from src.domain.alerts import AlertSeverity, AlertStatus
-    from src.domain.models import Building, Floor, Room
-    from src.domain.sensors import (
+    from src.domain.alert import Alert
+    from src.domain.building import Building
+    from src.domain.enums import AlertSeverity, AlertStatus, SensorStatus
+    from src.domain.floor import Floor
+    from src.domain.room import Room
+    from src.domain.sensor import (
         CO2Sensor,
         EnergySensor,
         HumiditySensor,
         MotionSensor,
-        SensorReading,
-        SensorStatus,
         TemperatureSensor,
     )
+    from src.domain.sensor_reading import SensorReading
     from src.repository.memory import AlertRepository, ReadingRepository, SensorRepository
     from src.service.alert import AlertService
     from src.service.monitoring import MonitoringService
     from src.service.notification import ConsoleNotificationService
     from src.service.reporting import ReportingService
 except ModuleNotFoundError:
-    from domain.alerts import AlertSeverity, AlertStatus
-    from domain.models import Building, Floor, Room
-    from domain.sensors import (
+    from domain.alert import Alert
+    from domain.building import Building
+    from domain.enums import AlertSeverity, AlertStatus, SensorStatus
+    from domain.floor import Floor
+    from domain.room import Room
+    from domain.sensor import (
         CO2Sensor,
         EnergySensor,
         HumiditySensor,
         MotionSensor,
-        SensorReading,
-        SensorStatus,
         TemperatureSensor,
     )
+    from domain.sensor_reading import SensorReading
     from repository.memory import AlertRepository, ReadingRepository, SensorRepository
     from service.alert import AlertService
     from service.monitoring import MonitoringService

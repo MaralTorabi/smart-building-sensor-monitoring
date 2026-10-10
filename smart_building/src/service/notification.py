@@ -1,7 +1,7 @@
-"""Notification abstraction and concrete delivery services.
-
-This module decouples alert alerting from delivery mechanisms using
-the Dependency Inversion Principle.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations
@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Any, Dict, List
 
-from ..domain.alerts import AlertSeverity
+from ..domain.enums import AlertSeverity
 
 
 class NotificationService(ABC):
@@ -49,9 +49,9 @@ class ConsoleNotificationService(NotificationService):
         severity: AlertSeverity = AlertSeverity.INFO,
     ) -> bool:
         """Prints a color-formatted alert line to console and tracks history."""
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        record = {
-            "timestamp": timestamp,
+        timestamp_str: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        record: Dict[str, Any] = {
+            "timestamp": timestamp_str,
             "severity": severity.value,
             "recipient": recipient,
             "message": message,
@@ -59,7 +59,7 @@ class ConsoleNotificationService(NotificationService):
         self.history.append(record)
 
         print(
-            f"[{timestamp}] [NOTIFICATION - {severity.value}] "
+            f"[{timestamp_str}] [NOTIFICATION - {severity.value}] "
             f"To: {recipient} | Message: {message}"
         )
         return True
@@ -84,7 +84,7 @@ class EmailNotificationService(NotificationService):
         severity: AlertSeverity = AlertSeverity.INFO,
     ) -> bool:
         """Simulates dispatching an email to the specified address."""
-        email_record = {
+        email_record: Dict[str, Any] = {
             "from": self.sender_email,
             "to": recipient,
             "subject": f"[{severity.value}] Building Sensor Alert",

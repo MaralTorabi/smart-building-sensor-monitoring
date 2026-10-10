@@ -1,4 +1,8 @@
-"""Unit tests for sensor domain entities, models hierarchy, and reading conversions."""
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
+"""
 
 from __future__ import annotations
 
@@ -13,16 +17,18 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.domain.models import Building, Floor, Room
-from src.domain.sensors import (
+from src.domain.building import Building
+from src.domain.enums import SensorStatus
+from src.domain.floor import Floor
+from src.domain.room import Room
+from src.domain.sensor import (
     CO2Sensor,
     EnergySensor,
     HumiditySensor,
     MotionSensor,
-    SensorReading,
-    SensorStatus,
     TemperatureSensor,
 )
+from src.domain.sensor_reading import SensorReading
 
 
 def test_sensor_instantiation_and_inheritance():

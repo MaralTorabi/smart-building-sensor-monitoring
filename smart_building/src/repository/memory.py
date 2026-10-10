@@ -1,7 +1,7 @@
-"""In-memory concrete repository implementations.
-
-This module provides in-memory data storage implementations of Repository[T]
-for sensors, readings, and alerts.
+"""
+Project: Smart Building Sensor Monitoring System
+Author: Maral Torabi
+Student ID: 40213312
 """
 
 from __future__ import annotations
@@ -9,8 +9,10 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Dict, Generic, List, Optional, TypeVar
 
-from ..domain.alerts import Alert, AlertSeverity, AlertStatus
-from ..domain.sensors import Sensor, SensorReading, SensorStatus
+from ..domain.alert import Alert
+from ..domain.enums import AlertSeverity, AlertStatus, SensorStatus
+from ..domain.sensor import Sensor
+from ..domain.sensor_reading import SensorReading
 from .base import Repository
 
 T = TypeVar("T")
